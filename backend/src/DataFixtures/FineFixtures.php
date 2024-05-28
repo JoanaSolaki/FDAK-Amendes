@@ -21,36 +21,36 @@ class FineFixtures extends AbstractFixtures {
             "AC2024_23_77"
         ];
 
-        $reasons = [
-            "Non respect des feux Kaijus.",
-            "Refus de se rendre à un abri.",
-            "Non-respect des consignes de sécurité lors des attaques",
-            "Refus d'obtempérer face à un membre des Forces de Défense Anti-Kaiju.",
-            "Obstruction des Forces de Défense Anti-Kaiju.",
-            "Attaque non autorisée sur un Kaiju.",
-            "Obstruction des forces de défense Kaiju",
-            "Usage inapproprié des systèmes d'alerte Kaiju.",
-            "Tentative de vol d'équipement du FDAK.",
-            "Utilisation de drones en zones de combat Kaiju"
-        ];
-
-        $amounts = [
-            100,
-            400,
-            300,
-            450,
-            1500,
-            700,
-            1000,
-            150,
-            2000,
-            200
+        $fines = [
+            ["reason" => "Non respect des feux Kaijus.", 
+            "amount" => 100],
+            ["reason" => "Refus de se rendre à un abri.", 
+            "amount" => 400],
+            ["reason" => "Non-respect des consignes de sécurité lors des attaques", 
+            "amount" => 300],
+            ["reason" => "Refus d'obtempérer face à un membre des Forces de Défense Anti-Kaiju.", 
+            "amount" => 450],
+            ["reason" => "Obstruction des Forces de Défense Anti-Kaiju.", 
+            "amount" => 1500],
+            ["reason" => "Attaque non autorisée sur un Kaiju.", 
+            "amount" => 700],
+            ["reason" => "Obstruction des forces de défense Kaiju", 
+            "amount" => 1000],
+            ["reason" => "Usage inapproprié des systèmes d'alerte Kaiju.", 
+            "amount" => 150],
+            ["reason" => "Tentative de vol d'équipement du FDAK.", 
+            "amount" => 2000],
+            ["reason" => "Utilisation de drones en zones de combat Kaiju", 
+            "amount" => 200]
         ];
 
         for ($i = 0; $i < 10; $i++) {
             $fine = new Fine();
-            $fine->setReason($reasons[$i]);
-            $fine->setAmount($amounts[$i]);
+            $currentFine = ($this->faker->randomElement($fines));
+            $reason = $currentFine['reason'];
+            $amount = $currentFine['amount'];
+            $fine->setReason($reason);
+            $fine->setAmount($amount);
             $fine->setIdTaxes($id_taxes[$i]);
 
             $this->setReference('fine_' . $i, $fine);
