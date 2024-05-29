@@ -2,62 +2,66 @@
 
 # FRONTEND
 # dependencies
-frontend/node_modules
-frontend/.pnp
-frontend/.pnp.js
-frontend/.yarn/install-state.gz
+/frontend/node_modules
+/frontend/.pnp
+/frontend/.pnp.js
+/frontend/.yarn/install-state.gz
 
 # testing
-frontend/coverage
+/frontend/coverage
 
 # next.js
-frontend/.next/
-frontend/out/
+/frontend/.next/
+/frontend/out/
 
 # production
-frontend/build
+/frontend/build
 
 # misc
-frontend/.DS_Store
-frontend/*.pem
+/frontend/.DS_Store
+/frontend/*.pem
 
 # debug
-frontend/npm-debug.log*
-frontend/yarn-debug.log*
-frontend/yarn-error.log*
+/frontend/npm-debug.log*
+/frontend/yarn-debug.log*
+/frontend/yarn-error.log*
 
 # local env files
-frontend/.env*.local
+/frontend/.env*.local
 
 # vercel
-frontend/.vercel
+/frontend/.vercel
 
 # typescript
-frontend/*.tsbuildinfo
-frontend/next-env.d.ts
+/frontend/*.tsbuildinfo
+/frontend/next-env.d.ts
 
 # BACKEND
 ###> symfony/framework-bundle ###
-backend/.env.local
-backend/.env.local.php
-backend/.env.*.local
-backend/config/secrets/prod/prod.decrypt.private.php
-backend/public/bundles/
-backend/var/
-backend/vendor/
+/backend/.env.local
+/backend/.env.local.php
+/backend/.env.*.local
+/backend/config/secrets/prod/prod.decrypt.private.php
+/backend/public/bundles/
+/backend/var/
+/backend/vendor/
 ###< symfony/framework-bundle ###
 
 ###> phpunit/phpunit ###
-backend/phpunit.xml
-backend/.phpunit.result.cache
+/backend/phpunit.xml
+/backend/.phpunit.result.cache
 ###< phpunit/phpunit ###
 
 ###> symfony/phpunit-bridge ###
-backend/.phpunit.result.cache
-backend/phpunit.xml
+/backend/.phpunit.result.cache
+/backend/phpunit.xml
 ###< symfony/phpunit-bridge ###
 
 ###> symfony/asset-mapper ###
-backend/public/assets/
-backend/assets/vendor/
+/backend/public/assets/
+/backend/assets/vendor/
 ###< symfony/asset-mapper ###
+
+###> lexik/jwt-authentication-bundle ###
+/backend/config/jwt/*.pem
+###< lexik/jwt-authentication-bundle ###
