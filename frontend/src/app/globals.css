@@ -6,6 +6,9 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  --primaryColor: #00EEDF;
+  --blackColor: #090909;
+  --whiteColor: #FAFAFA;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -17,17 +20,15 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background-color: var(--blackColor);
+  color: var(--whiteColor);
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+main {
+  padding: 0 10%;
+}
+
+h1 {
+  text-transform: uppercase;
+  font-size: 4em;
 }

@@ -1,0 +1,36 @@
+form {
+    margin: 0 auto;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    max-width: 680px;
+}
+
+form div {
+    display: flex;
+    flex-flow: column;
+    width: 38%;
+    margin: 20px;
+}
+
+label {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+input {
+    border: 1px solid var(--whiteColor);
+    background-color: var(--blackColor);
+    height: 46px;
+    color: var(--whiteColor);
+    border-radius: 4px;
+    padding: 10px;
+    transition: 200ms;
+    outline: 1px solid var(--blackColor);
+}
+
+input:focus-visible {
+    outline: 1px solid var(--primaryColor);
+    transition: 200ms;
+}
