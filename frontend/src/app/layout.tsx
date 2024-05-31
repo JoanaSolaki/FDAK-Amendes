@@ -2,6 +2,7 @@ import { Audiowide, Orbitron } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar/Navbar";
 import { metadata } from "./metadata";
+import AppContextProvider from "@/app/AppContext";
 
 export const orbitron = Orbitron({
   subsets: ['latin'],
@@ -28,16 +29,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr">
-      <head>
-        <title>{metadataTitle}</title>
-        <meta name="description" content={metadataDescription} />
-      </head>
-      <body className={orbitron.className}>
-        <header>
-          <Navbar></Navbar>
-        </header>
-        {children}
-      </body>
+      <AppContextProvider>
+        <head>
+          <title>{metadataTitle}</title>
+          <meta name="description" content={metadataDescription} />
+        </head>
+        <body className={orbitron.className}>
+          <header>
+            <Navbar></Navbar>
+          </header>
+          {children}
+        </body>
+      </AppContextProvider>
     </html>
   );
 }

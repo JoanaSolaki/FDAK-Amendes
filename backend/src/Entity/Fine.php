@@ -3,13 +3,18 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
-use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Post;
 use App\Repository\FineRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: FineRepository::class)]
 #[ApiResource(
+    operations: [
+        new Get(),
+        new Post(
+        ),
+    ]
 )]
 class Fine
 {

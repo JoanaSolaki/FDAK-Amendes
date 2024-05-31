@@ -2,8 +2,13 @@
 
 import { audiowide } from '../layout';
 import FormConnexion from "@/components/FormConnexion/FormConnexion";
+import { AppContext } from '@/app/AppContext';
+import { useContext } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function Connexion() {
+    const router = useRouter();
+    const appContext = useContext(AppContext)
 
     async function onSubmit(event) {
         event.preventDefault();
@@ -26,12 +31,12 @@ export default function Connexion() {
         .then((data) => {
           console.log(data);
           localStorage.setItem('token', data.token)
+          appContext.setToken(data.token)
+          router.push("/profile");
         })
         .catch((error) => {
-          console.error("Erreur lors de la requête :", error);
+            console.error("Erreur lors de la requête :", error);
         });
-
-        // window.location.href = "/connexion";
     }
 
     return (

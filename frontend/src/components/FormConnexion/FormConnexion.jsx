@@ -4,7 +4,7 @@ import Button from '@/components/Button/Button';
 
 export default function FormConnexion({ onSubmit }) {
     return (
-        <form method='post' onSubmit={onSubmit}>
+        <form method='post' onSubmit={onSubmit} className='connexion'>
             <div>
                 <label htmlFor='email'>Adresse mail*</label>
                 <InputText keyfilter="email" type="email" name="username" minLength="10" maxLength="100" required />

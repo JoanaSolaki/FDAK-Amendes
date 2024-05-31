@@ -1,4 +1,4 @@
-form {
+.inscription {
     margin: 0 auto;
     display: flex;
     flex-flow: row wrap;
@@ -6,7 +6,7 @@ form {
     max-width: 680px;
 }
 
-form div {
+.inscription div {
     display: flex;
     flex-flow: column;
     width: 38%;

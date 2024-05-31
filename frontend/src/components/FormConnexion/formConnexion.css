@@ -1,4 +1,4 @@
-form {
+.connexion {
     margin: 0 auto;
     display: flex;
     flex-flow: column wrap;
@@ -7,7 +7,7 @@ form {
     max-width: 680px;
 }
 
-form div {
+.connexion div {
     display: flex;
     flex-flow: column;
     width: 38%;

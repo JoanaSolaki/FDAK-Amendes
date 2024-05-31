@@ -41,6 +41,7 @@
 /backend/.env.local
 /backend/.env.local.php
 /backend/.env.*.local
+/backend/.env.test
 /backend/config/secrets/prod/prod.decrypt.private.php
 /backend/public/bundles/
 /backend/var/
