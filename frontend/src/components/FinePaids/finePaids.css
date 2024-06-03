@@ -1,0 +1,11 @@
+.finePaid {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    width: auto;
+}
+
+.finePaid p {
+    display: block;
+    width: fit-content;
+}

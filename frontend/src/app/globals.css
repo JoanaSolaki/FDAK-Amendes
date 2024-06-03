@@ -33,3 +33,28 @@ h1 {
   font-size: 4em;
   margin: 40px 0;
 }
+
+h2 {
+  position: relative;
+  font-size: 1.6em;
+  width: 100%;
+  background-color: var(--primaryColor);
+  color: var(--blackColor);
+  padding: 10px;
+  margin-bottom: -2px;
+  z-index: 99;
+}
+
+.profile {
+  border: 1px solid var(--whiteColor);
+  padding: 20px 40px;
+  margin-bottom: 40px;
+}
+
+.profileForm {
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: baseline;
+  align-items: center;
+}

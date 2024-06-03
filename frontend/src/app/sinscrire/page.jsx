@@ -2,6 +2,7 @@
 
 import { audiowide } from '../layout';
 import FormInscription from "@/components/FormInscription/FormInscription";
+import Intro from "@/components/Intro/Intro";
 import { AppContext } from '@/app/AppContext';
 import { useContext } from 'react';
 
@@ -40,8 +41,9 @@ export default function Sinscrire() {
 
 return (
     <main>
-        <h1 className={`${audiowide.className} text-center`}>S'inscrire</h1>
-        <FormInscription onSubmit={onSubmit}></FormInscription>
+      <Intro></Intro>
+      <h1 className={`${audiowide.className} text-center`}>S'inscrire</h1>
+      <FormInscription onSubmit={onSubmit}></FormInscription>
     </main>
 );
 }

@@ -2,6 +2,7 @@
 
 import { audiowide } from '../layout';
 import FormConnexion from "@/components/FormConnexion/FormConnexion";
+import Intro from "@/components/Intro/Intro";
 import { AppContext } from '@/app/AppContext';
 import { useContext } from 'react';
 import { useRouter } from 'next/navigation';
@@ -41,8 +42,9 @@ export default function Connexion() {
 
     return (
         <main>
-            <h1 className={`${audiowide.className} text-center`}>Connexion</h1>
-            <FormConnexion onSubmit={onSubmit}></FormConnexion>
+          <Intro></Intro>
+          <h1 className={`${audiowide.className} text-center`}>Connexion</h1>
+          <FormConnexion onSubmit={onSubmit}></FormConnexion>
         </main>
     );
 }

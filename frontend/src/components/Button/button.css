@@ -6,6 +6,8 @@ button {
     margin: 20px auto;
     transition: 500ms ease-out;
     border: 1px solid var(--blackColor);
+    height: fit-content;
+    width: fit-content;
 }
 
 button:hover {
