@@ -5,3 +5,10 @@ controllers:
     type: attribute
 api_login_check:
     path: /api/login_check
+api_users_get_by_email:
+    path: /api/users/{email}
+    controller: App\Controller\UserByEmailController::class
+    methods: ['GET']
+    defaults:
+        _api_resource_class: App\Entity\User::class
+        _api_collection_operation_name: 'get_by_email'

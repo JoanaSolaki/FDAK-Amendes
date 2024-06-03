@@ -24,7 +24,12 @@ use Symfony\Component\Security\Core\User\UserInterface;
         new Post(
             controller: SignUpController::class
         ),
-        new Patch()
+        new Patch(),
+        new Get(
+            uriTemplate: '/users/{email}',
+            routeName: 'api_users_get_by_email',
+            requirements: ['email' => '.+']
+        )
     ]
 )]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
