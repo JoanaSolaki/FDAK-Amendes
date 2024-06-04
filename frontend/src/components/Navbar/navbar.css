@@ -15,12 +15,14 @@ ul {
 .navbar li {
   padding: 0 20px;
   height: 100%;
+  cursor: pointer;
 }
 
 .navbar ul li a {
   display: block;
   height: 100%;
-  padding: 20px;
+  padding: 20px 0px;
+  text-transform: capitalize;
 }
 
 .navbar li:hover a {

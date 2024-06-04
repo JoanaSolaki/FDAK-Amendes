@@ -5,9 +5,12 @@ import FormInscription from "@/components/FormInscription/FormInscription";
 import Intro from "@/components/Intro/Intro";
 import { AppContext } from '@/app/AppContext';
 import { useContext } from 'react';
+import { useRouter } from 'next/navigation';
+import { Message } from 'primereact/message';
 
 export default function Sinscrire() {
   const appContext = useContext(AppContext)
+  const router = useRouter();
 
   async function onSubmit(event) {
     event.preventDefault();
@@ -29,19 +32,22 @@ export default function Sinscrire() {
     })
     .then((data) => {
       console.log(data);
+      router.push('/connexion');
     })
     .catch((error) => {
       console.error("Erreur lors de la requête :", error);
       const messageError = "Erreur lors de la requête : " + error;
-      appContext.setMessage(messageError);
+      appContext.setErrorMessage(messageError);
     });
-
-    window.location.href = "/connexion";
 }
 
 return (
     <main>
       <Intro></Intro>
+      {appContext.errorMessage != null && (
+        <Message severity="error" text={"Une erreur est survenue" + appContext.errorMessage} />
+      )}
+
       <h1 className={`${audiowide.className} text-center`}>S'inscrire</h1>
       <FormInscription onSubmit={onSubmit}></FormInscription>
     </main>

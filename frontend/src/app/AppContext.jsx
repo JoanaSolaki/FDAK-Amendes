@@ -5,14 +5,20 @@ import { createContext, useState } from "react";
 export const AppContext = createContext();
 
 export default function AppContextProvider({ children }) {
-  const [message, setMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [sucessMessage, setSucessMessage] = useState(null);
   const [token, setToken] = useState(null);
+  const [userData, setUserData] = useState(null);
 
   const contextValues = {
-    message,
-    setMessage,
+    errorMessage,
+    setErrorMessage,
+    sucessMessage,
+    setSucessMessage,
     token,
-    setToken
+    setToken,
+    userData,
+    setUserData
   };
 
   return (

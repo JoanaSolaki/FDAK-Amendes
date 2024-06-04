@@ -1,8 +1,10 @@
 import { jwtDecode } from 'jwt-decode';
 import { useRouter } from "next/navigation";
-import { useEffect } from 'react';
+import { AppContext } from '@/app/AppContext';
+import { useContext, useEffect } from 'react';
 
 export function isTokenValid() {
+    const appContext = useContext(AppContext)
     const router = useRouter();
 
     const token = localStorage.getItem("token");
@@ -24,11 +26,12 @@ export function isTokenValid() {
             } else {
             // Le token a expiré, supprimez-le du local storage
             localStorage.removeItem("token");
+            appContext.setUserData(null);
             }
         } catch (error) {
             console.error("Erreur lors de la requête :", error);
             const messageError = "Erreur lors de la requête : " + error;
-            appContext.setMessage(messageError);
+            appContext.setErrorMessage(messageError);
             router.push("/connexion");
         }
     }

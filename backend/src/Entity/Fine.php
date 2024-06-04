@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
 use App\Repository\FineRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -14,6 +15,12 @@ use Doctrine\ORM\Mapping as ORM;
         new Get(),
         new Post(
         ),
+        new GetCollection(),
+        new Post(
+            uriTemplate: '/fines/byIdTaxes',
+            routeName: 'searchByIdTaxes',
+            // requirements: ['idTaxe']
+        )
     ]
 )]
 class Fine

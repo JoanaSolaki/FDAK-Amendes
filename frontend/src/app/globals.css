@@ -55,6 +55,14 @@ h2 {
   width: 100%;
   display: flex;
   flex-flow: row wrap;
-  justify-content: baseline;
-  align-items: center;
+  justify-content: normal;
+  align-items: last baseline;
+}
+
+.profileForm button {
+  margin: 0 10px;
+}
+
+.taxesForm div {
+  width: 360px;
 }

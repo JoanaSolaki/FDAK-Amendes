@@ -2,9 +2,10 @@
 
 import './navbar.css';
 import Link from "next/link";
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '@/app/AppContext';
 import { useRouter } from 'next/navigation';
+import { jwtDecode } from 'jwt-decode';
 
 export default function Navbar() {
   const router = useRouter();
@@ -16,8 +17,9 @@ export default function Navbar() {
   }, [appContext]);
 
   function logout() {
-    localStorage.clear();
+    localStorage.removeItem("token");
     appContext.setToken(null);
+    appContext.setUserData(null);
     router.push("/connexion");
   }
 
@@ -43,7 +45,7 @@ export default function Navbar() {
       {(appContext.token) &&
         <ul>
           <li>
-            <Link href="/"></Link>
+            <Link href="/profile">{appContext.userData ? appContext.userData.name : "Username" }</Link>
           </li>
           <li>
             <a onClick={logout}>Déconnexion</a>

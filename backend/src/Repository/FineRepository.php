@@ -7,7 +7,12 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Fine>
+ * @extends ServiceEntityRepository<ReportPlanet>
+ *
+ * @method Fine|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Fine|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Fine[]    findAll()
+ * @method Fine[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class FineRepository extends ServiceEntityRepository
 {
@@ -31,13 +36,13 @@ class FineRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Fine
+    //    public function findOneByIdTaxes($idTaxes): ?Fine
     //    {
-    //        return $this->createQueryBuilder('f')
-    //            ->andWhere('f.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
+    //        $dbb = $this->getDb()->prepare('SELECT * FROM Fine WHERE id_taxes = :id_taxes');
+    //        $dbb->bindValue(':id_taxes', $idTaxes);
+    //        $dbb->setFetchMode(PDO::FETCH_CLASS, 'Fine');
+    //        $dbb->execute();
+    //        return $dbb->fetch();
     //        ;
     //    }
 }
