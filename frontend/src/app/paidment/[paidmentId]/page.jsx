@@ -1,10 +1,15 @@
-import { useRouter } from 'next/router';
+"use client"
+
+import { useRouter } from 'next/navigation';
+import { isTokenValid } from "../../tokenVerify";
 import { useEffect, useState } from 'react';
 
 export default function Payment(props) {
   const router = useRouter();
-  const id = props.params.idPaidment;
+  const id = props.params.paidmentId;
   const [fineDetails, setFineDetails] = useState(null);
+
+  isTokenValid();
 
   useEffect(() => {
     const token = localStorage.getItem("token");

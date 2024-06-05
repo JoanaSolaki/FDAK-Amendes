@@ -7,7 +7,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<ReportPlanet>
+ * @extends ServiceEntityRepository<Fine>
  *
  * @method Fine|null find($id, $lockMode = null, $lockVersion = null)
  * @method Fine|null findOneBy(array $criteria, array $orderBy = null)
@@ -33,16 +33,6 @@ class FineRepository extends ServiceEntityRepository
     //            ->setMaxResults(10)
     //            ->getQuery()
     //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneByIdTaxes($idTaxes): ?Fine
-    //    {
-    //        $dbb = $this->getDb()->prepare('SELECT * FROM Fine WHERE id_taxes = :id_taxes');
-    //        $dbb->bindValue(':id_taxes', $idTaxes);
-    //        $dbb->setFetchMode(PDO::FETCH_CLASS, 'Fine');
-    //        $dbb->execute();
-    //        return $dbb->fetch();
     //        ;
     //    }
 }

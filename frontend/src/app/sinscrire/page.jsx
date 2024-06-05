@@ -4,6 +4,7 @@ import { audiowide } from '../layout';
 import FormInscription from "@/components/FormInscription/FormInscription";
 import Intro from "@/components/Intro/Intro";
 import { AppContext } from '@/app/AppContext';
+import { isTokenValid } from "../tokenVerify";
 import { useContext } from 'react';
 import { useRouter } from 'next/navigation';
 import { Message } from 'primereact/message';
@@ -11,6 +12,8 @@ import { Message } from 'primereact/message';
 export default function Sinscrire() {
   const appContext = useContext(AppContext)
   const router = useRouter();
+
+  isTokenValid("/sinscrire");
 
   async function onSubmit(event) {
     event.preventDefault();

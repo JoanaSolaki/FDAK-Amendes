@@ -2,6 +2,7 @@
 
 import { audiowide } from '../layout';
 import FormConnexion from "@/components/FormConnexion/FormConnexion";
+import { isTokenValid } from "../tokenVerify";
 import Intro from "@/components/Intro/Intro";
 import { AppContext } from '@/app/AppContext';
 import { useContext } from 'react';
@@ -10,6 +11,8 @@ import { useRouter } from 'next/navigation';
 export default function Connexion() {
     const router = useRouter();
     const appContext = useContext(AppContext)
+
+    isTokenValid("/connexion");
 
     async function onSubmit(event) {
         event.preventDefault();

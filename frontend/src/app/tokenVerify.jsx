@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { AppContext } from '@/app/AppContext';
 import { useContext, useEffect } from 'react';
 
-export function isTokenValid() {
+export function isTokenValid(route) {
     const appContext = useContext(AppContext)
     const router = useRouter();
 
@@ -22,7 +22,9 @@ export function isTokenValid() {
             // Vérifiez si le token n'a pas expiré
             if (decodedToken.exp > currentTime) {
             // Redirigez l'utilisateur vers /profile
-            router.push("/profile");
+            if (route === "/sinscrire" || route === "/connexion" || route === "/") {
+                router.push("/profile");
+            }
             } else {
             // Le token a expiré, supprimez-le du local storage
             localStorage.removeItem("token");

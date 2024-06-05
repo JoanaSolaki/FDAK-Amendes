@@ -44,34 +44,57 @@ export default function Profile() {
     }
   }, []);
 
+//   const submitIdTaxe = async (event) => {
+//     event.preventDefault();
+//     const token = localStorage.getItem("token");
+
+//     const form = event.currentTarget;
+//     if (form.checkValidity() === false) {
+//         event.stopPropagation();
+//     } else {
+//         try {
+//             const response = await fetch(`http://127.0.0.1:8000/api/fines/IdTaxes/${form.elements.id_taxes.value}`);
+//             if (response.ok) {
+//                 const taxe = await response.json();
+//                 setIdTaxes(taxe);
+//             } else {
+//                 throw new Error('Taxe not found');
+//             }
+//         } catch (error) {
+//             console.error(error);
+//             setIdTaxes(null);
+//         }
+//     }
+//     // setValidated(true);
+// };
+
   async function submitIdTaxe(event) {
     event.preventDefault();
 
     const token = localStorage.getItem("token");
 
-    const idTaxes = event.target.elements.id_taxes.value;  
-    
-    const requestBody = JSON.stringify({ id_taxes: idTaxes });
+    // const idTaxes = event.target.elements.id_taxes.value;  
 
-    fetch(`http://127.0.0.1:8000/api/fines/byIdTaxes`, {
-      method: "POST",
+    fetch(`http://127.0.0.1:8000/api/fines/IdTaxes/${event.target.elements.id_taxes.value}`, {
+      method: "GET",
       headers: {
-        "Content-Type": "application/json/ld+json",
         Authorization: `Bearer ${token}`,
       },
-      body: requestBody,
     })
       .then((response) => {
         if (!response.ok) {
           throw new Error("Erreur de réseau : " + response.status);
         }
+        setIdTaxes(idTaxes);
         return response.json();
       })
       .then((data) => {
         console.log(data);
+        router.push("/paidment/" + data.id)
       })
       .catch((error) => {
         console.error("Erreur lors de la requête :", error);
+        setIdTaxes(null);
       });
     }
 
