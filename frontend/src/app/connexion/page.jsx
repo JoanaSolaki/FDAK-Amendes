@@ -7,6 +7,7 @@ import Intro from "@/components/Intro/Intro";
 import { AppContext } from '@/app/AppContext';
 import { useContext } from 'react';
 import { useRouter } from 'next/navigation';
+import { Message } from 'primereact/message';
 
 export default function Connexion() {
     const router = useRouter();
@@ -33,19 +34,22 @@ export default function Connexion() {
           return response.json();
         })
         .then((data) => {
-          console.log(data);
           localStorage.setItem('token', data.token)
           appContext.setToken(data.token)
           router.push("/profile");
         })
         .catch((error) => {
             console.error("Erreur lors de la requête :", error);
+            appContext.setErrorMessage("La requête n'as pas abouti ou n'as pas été trouvée.");
         });
     }
 
     return (
         <main>
           <Intro></Intro>
+          {appContext.errorMessage != null && (
+            <Message severity="error" text={"Une erreur est survenue : " + appContext.errorMessage} />
+          )}
           <h1 className={`${audiowide.className} text-center`}>Connexion</h1>
           <FormConnexion onSubmit={onSubmit}></FormConnexion>
         </main>

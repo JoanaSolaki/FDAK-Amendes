@@ -66,3 +66,62 @@ h2 {
 .taxesForm div {
   width: 360px;
 }
+
+/* CALENDAR */
+
+.paidmentForm {
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: normal;
+  align-items: last baseline;
+}
+
+.paidmentForm > div {
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: normal;
+  align-items: last baseline;
+  margin: 0;
+}
+
+.paidmentForm button {
+  margin: 20px 10px;
+}
+
+.p-datepicker {
+  background-color: var(--whiteColor);
+  color: var(--blackColor);
+  width: auto;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  height: 400px;
+}
+
+.p-datepicker div {
+  width: 95%;
+  margin: 0 10px;
+}
+
+.p-datepicker-header {
+  flex-flow: row;
+}
+
+.p-datepicker-title {
+  flex-flow: row;
+}
+
+.p-datepicker-title button {
+  font-size: 1em;
+}
+
+.p-datepicker-calendar td {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.p-datepicker-calendar tbody td:hover {
+  color: var(--primaryColor);
+}

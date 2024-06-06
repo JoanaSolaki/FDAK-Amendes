@@ -50,7 +50,6 @@ return (
       {appContext.errorMessage != null && (
         <Message severity="error" text={"Une erreur est survenue" + appContext.errorMessage} />
       )}
-
       <h1 className={`${audiowide.className} text-center`}>S'inscrire</h1>
       <FormInscription onSubmit={onSubmit}></FormInscription>
     </main>

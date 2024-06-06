@@ -9,13 +9,13 @@ import FinePaids from "@/components/FinePaids/FinePaids";
 import { jwtDecode } from "jwt-decode";
 import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { Message } from 'primereact/message';
 
 export default function Profile() {
   const appContext = useContext(AppContext);
   const [idTaxes, setIdTaxes] = useState("");
   const router = useRouter();
 
-  isTokenValid();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -44,38 +44,64 @@ export default function Profile() {
     }
   }, []);
 
-//   const submitIdTaxe = async (event) => {
-//     event.preventDefault();
-//     const token = localStorage.getItem("token");
+  isTokenValid();
 
-//     const form = event.currentTarget;
-//     if (form.checkValidity() === false) {
-//         event.stopPropagation();
-//     } else {
-//         try {
-//             const response = await fetch(`http://127.0.0.1:8000/api/fines/IdTaxes/${form.elements.id_taxes.value}`);
-//             if (response.ok) {
-//                 const taxe = await response.json();
-//                 setIdTaxes(taxe);
-//             } else {
-//                 throw new Error('Taxe not found');
-//             }
-//         } catch (error) {
-//             console.error(error);
-//             setIdTaxes(null);
-//         }
-//     }
-//     // setValidated(true);
-// };
+  const validateIdTaxes = (idTaxes) => {
+    const code = idTaxes;
+
+    const currentDate = new Date;
+    const currentYear = currentDate.getFullYear()
+
+    const letter1 = code.charAt(0);
+    const letter2 = code.charAt(1);
+    const year = code.slice(2, 6);
+    const parts = code.split('_');
+    const num1 = parseInt(parts[1], 10);
+    const num2 = parseInt(parts[2], 10);
+
+    const compareValue = letter1.localeCompare(letter2)
+    if (compareValue === 1) {
+      const error = "La première lettre n'est pas avant la seconde dans l'alphabet."
+      appContext.setErrorMessage(error);
+      console.log(error);
+      return false
+    }
+
+    if (year != currentYear) {
+      const error = "L'année n'est pas la bonne."
+      appContext.setErrorMessage(error);
+      console.log(error);
+      return false
+    }
+    
+    const compareTotalNumber = num1 + num2
+    if (compareTotalNumber != 100) {
+      const error = "Le total des deux derniers chiffres ne fait pas 100."
+      appContext.setErrorMessage(error);
+      console.log(error);
+      return false
+    }
+  
+    return true
+  };
 
   async function submitIdTaxe(event) {
     event.preventDefault();
 
     const token = localStorage.getItem("token");
 
-    // const idTaxes = event.target.elements.id_taxes.value;  
+    const idTaxes = event.target.elements.id_taxes.value;
 
-    fetch(`http://127.0.0.1:8000/api/fines/IdTaxes/${event.target.elements.id_taxes.value}`, {
+    if (validateIdTaxes(idTaxes) === false) {
+      // appContext.setErrorMessage("ID de taxe invalide. Veuillez vérifier et réessayer.");
+      return;
+    }
+
+    if (validateIdTaxes(idTaxes) === true) {
+      console.log("Le code est valide !");
+      }
+
+    fetch(`http://127.0.0.1:8000/api/fines/IdTaxes/${idTaxes}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -90,10 +116,11 @@ export default function Profile() {
       })
       .then((data) => {
         console.log(data);
-        router.push("/paidment/" + data.id)
+        router.push("/paidment:" + data.id)
       })
       .catch((error) => {
-        console.error("Erreur lors de la requête :", error);
+        console.error("Erreur lors de la requête : ", error);
+        appContext.setErrorMessage("La requête n'as pas abouti ou n'as pas été trouvée.");
         setIdTaxes(null);
       });
     }
@@ -104,16 +131,28 @@ export default function Profile() {
         {(!appContext.userData && "Your profile") ||
           (appContext.userData && "Profile of " + appContext.userData.name)}
       </h1>
-
+      {appContext.errorMessage != null && (
+        <Message severity="error" text={"Une erreur est survenue : " + appContext.errorMessage} />
+      )}
       <h2 className={`${audiowide.className}`}>Informations personnelles</h2>
       <section className="profile">
         <form method="post" className="profileForm">
-          <Input label="Adresse mail" name="email" type="email"></Input>
-          <Input label="Nom" name="name" type="text"></Input>
-          <Input label="Prénom" name="surname" type="text"></Input>
-          <Input label="Adresse postale" name="adress" type="text"></Input>
-          <Input label="Téléphone" name="phone" type="phone"></Input>
-          <Button text={"Enregistrer et modifier"} type="submit"></Button>
+        {appContext.userData != null ? <>
+            <Input label="Adresse mail" name="email" type="email" value={appContext.userData.email} />
+            <Input label="Nom" name="name" type="text" value={appContext.userData.name} />
+            <Input label="Prénom" name="surname" type="text" value={appContext.userData.surname} />
+            <Input label="Adresse postale" name="adress" type="text" value={appContext.userData.adress} />
+            <Input label="Téléphone" name="phone" type="phone" value={appContext.userData.phone} />
+            <Button text={"Enregistrer et modifier"} type="submit" />
+            </> : 
+            <>
+            <Input label="Adresse mail" name="email" type="email" />
+            <Input label="Nom" name="name" type="text" />
+            <Input label="Prénom" name="surname" type="text" />
+            <Input label="Adresse postale" name="adress" type="text" />
+            <Input label="Téléphone" name="phone" type="phone" />
+            <Button text={"Enregistrer et modifier"} type="submit" />
+            </>}
         </form>
       </section>
 
