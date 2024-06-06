@@ -10,7 +10,14 @@ export function isTokenValid(route) {
     const token = localStorage.getItem("token");
 
     if (token == null) {
-        router.push("/connexion");
+        if (route === "/sinscrire") {
+            return
+        }
+        if (route === "/connexion") {
+            return
+        } else {
+            router.push("/connexion");
+        }
     }
 
     if (token != null) {

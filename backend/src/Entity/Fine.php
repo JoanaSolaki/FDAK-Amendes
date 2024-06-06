@@ -8,6 +8,7 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
 use App\Repository\FineRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: FineRepository::class)]
 #[ApiResource(
@@ -30,14 +31,26 @@ class Fine
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\Length(min: 10)]
+    #[Assert\Regex(
+        "/^[A-Z]{2}\d{4}_\d{1,2}_\d{1,2}$/", 
+        message: "The characters entered are not correct.")]
     #[ORM\Column(length: 100)]
-    private ?string $reason = null;
+    private string $reason = "";
 
+    #[Assert\Length(min: 10)]
+    #[Assert\Regex(
+        "/^\d+(\.\d{1,2})?$/", 
+        message: "The characters entered are not correct.")]
     #[ORM\Column]
-    private ?int $amount = null;
+    private int $amount = 0;
 
+    #[Assert\Length(min: 10)]
+    #[Assert\Regex(
+        "/^[A-Z]{2}\d{4}_\d{1,2}_\d{1,2}$/", 
+        message: "The characters entered are not correct.")]
     #[ORM\Column(length: 12)]
-    private ?string $id_taxes = null;
+    private string $id_taxes = "";
 
     #[ORM\OneToOne(mappedBy: 'fine', cascade: ['persist', 'remove'])]
     private ?Paidment $paidment = null;

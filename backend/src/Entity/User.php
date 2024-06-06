@@ -14,6 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
@@ -39,8 +40,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\Length(min: 10)]
+    #[Assert\Regex(
+        '/^[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+$/', 
+        message: "The characters entered are not correct.")]
     #[ORM\Column(length: 180)]
-    private ?string $email = null;
+    private string $email = '';
 
     /**
      * @var list<string> The user roles
@@ -52,7 +57,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
-    private ?string $password = null;
+    private string $password = '';
 
     /**
      * @var Collection<int, Paidment>
@@ -60,15 +65,31 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Paidment::class, mappedBy: 'user')]
     private Collection $paidments;
 
+    #[Assert\Length(min: 3)]
+    #[Assert\Regex(
+        "/^[A-Za-zÀ-ÖØ-öø-ÿ '-]+$/", 
+        message: "The characters entered are not correct.")]
     #[ORM\Column(length: 80)]
-    private ?string $name = null;
+    private string $name = "";
 
+    #[Assert\Length(min: 3)]
+    #[Assert\Regex(
+        "/^[A-Za-zÀ-ÖØ-öø-ÿ '-]+$/", 
+        message: "The characters entered are not correct.")]
     #[ORM\Column(length: 80)]
-    private ?string $surname = null;
+    private string $surname = "";
 
+    #[Assert\Length(min: 10)]
+    #[Assert\Regex(
+        "/^\d+\s[A-z]+\s[A-z]+/", 
+        message: "The characters entered are not correct.")]
     #[ORM\Column(length: 255)]
     private ?string $adress = null;
 
+    #[Assert\Length(min: 10)]
+    #[Assert\Regex(
+        '/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/', 
+        message: "The characters entered are not correct.")]
     #[ORM\Column(length: 255)]
     private ?string $phone = null;
 

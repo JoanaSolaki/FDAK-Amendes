@@ -19,22 +19,27 @@ export default function Sinscrire() {
     event.preventDefault();
 
     const formData = new FormData(event.target);
+    const formObject = Object.fromEntries(formData.entries());
 
     fetch('http://127.0.0.1:8000/api/users', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/ld+json'
       },
-      body: JSON.stringify(Object.fromEntries(formData.entries()))
+      body: JSON.stringify(formObject)
     })
     .then((response) => {
       if (!response.ok) {
-        throw new Error("Erreur de réseau : " + response.status);
+        throw new Error("Erreur de réseau :" + response.status);
       }
-      return response.json();
+      const contentType = response.headers.get('content-type');
+      if (contentType && contentType.includes('application/json')) {
+        response.json();
+      }
     })
     .then((data) => {
       console.log(data);
+      appContext.setSucessMessage("Votre compte à bien été créer, veuillez vous connecter.");
       router.push('/connexion');
     })
     .catch((error) => {

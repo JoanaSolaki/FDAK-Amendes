@@ -50,6 +50,9 @@ export default function Connexion() {
           {appContext.errorMessage != null && (
             <Message severity="error" text={"Une erreur est survenue : " + appContext.errorMessage} />
           )}
+          {appContext.sucessMessage != null && (
+            <Message severity="sucess" text={appContext.sucessMessage} />
+          )}
           <h1 className={`${audiowide.className} text-center`}>Connexion</h1>
           <FormConnexion onSubmit={onSubmit}></FormConnexion>
         </main>

@@ -14,8 +14,8 @@ import { Message } from 'primereact/message';
 export default function Profile() {
   const appContext = useContext(AppContext);
   const [idTaxes, setIdTaxes] = useState("");
+  const [loading, setloading] = useState(false);
   const router = useRouter();
-
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -37,6 +37,7 @@ export default function Profile() {
         })
         .then((data) => {
           appContext.setUserData(data);
+          setloading(true);
         })
         .catch((error) => {
           console.error("There was a problem with the fetch operation:", error);
@@ -85,7 +86,7 @@ export default function Profile() {
     return true
   };
 
-  async function submitIdTaxe(event) {
+  async function submitIdTaxe(event){
     event.preventDefault();
 
     const token = localStorage.getItem("token");
@@ -126,33 +127,23 @@ export default function Profile() {
     }
 
   return (
-    <main>
+    loading ? (
+      <main>
       <h1 className={`${audiowide.className}`}>
         {(!appContext.userData && "Your profile") ||
           (appContext.userData && "Profile of " + appContext.userData.name)}
       </h1>
       {appContext.errorMessage != null && (
-        <Message severity="error" text={"Une erreur est survenue : " + appContext.errorMessage} />
-      )}
+        <Message severity="error" text={"Une erreur est survenue : " + appContext.errorMessage} />)}
       <h2 className={`${audiowide.className}`}>Informations personnelles</h2>
       <section className="profile">
         <form method="post" className="profileForm">
-        {appContext.userData != null ? <>
             <Input label="Adresse mail" name="email" type="email" value={appContext.userData.email} />
             <Input label="Nom" name="name" type="text" value={appContext.userData.name} />
             <Input label="Prénom" name="surname" type="text" value={appContext.userData.surname} />
             <Input label="Adresse postale" name="adress" type="text" value={appContext.userData.adress} />
             <Input label="Téléphone" name="phone" type="phone" value={appContext.userData.phone} />
             <Button text={"Enregistrer et modifier"} type="submit" />
-            </> : 
-            <>
-            <Input label="Adresse mail" name="email" type="email" />
-            <Input label="Nom" name="name" type="text" />
-            <Input label="Prénom" name="surname" type="text" />
-            <Input label="Adresse postale" name="adress" type="text" />
-            <Input label="Téléphone" name="phone" type="phone" />
-            <Button text={"Enregistrer et modifier"} type="submit" />
-            </>}
         </form>
       </section>
 
@@ -169,5 +160,6 @@ export default function Profile() {
         <FinePaids/>
       </section>
     </main>
+    ) : (<p>Loading</p>)
   );
 }

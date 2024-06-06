@@ -27,7 +27,7 @@ export default function FormInscription({ onSubmit }) {
             </div>
             <div>
                 <label htmlFor='phone'>Téléphone*</label>
-                <InputText keyfilter="num" type='phone' name="phone" minLength="10" maxLength="100" required />
+                <InputText keyfilter="num" type='phone' name="phone" minLength="10" maxLength="14" required />
             </div>
             <Button text={"S'inscrire"} type="submit"></Button>
         </form>
