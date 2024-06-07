@@ -8,7 +8,7 @@ import { useContext, useEffect, useState } from 'react';
 import { jwtDecode } from "jwt-decode";
 import Input from "@/components/Input/Input";
 import Button from "@/components/Button/Button";
-import { Calendar } from 'primereact/calendar';
+import { Message } from 'primereact/message';
 
 export default function Payment(props) {
   const router = useRouter();
@@ -23,6 +23,8 @@ export default function Payment(props) {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+
+    appContext.setErrorMessage(null)
 
     if (props.params && props.params.paidmentId) {
       
@@ -97,110 +99,7 @@ export default function Payment(props) {
   maxDate.setMonth(nextMonth);
   maxDate.setFullYear(nextYear);
 
-// CARD_NUMBER
-  // const isValidCardNumber = (cardNumber) => {
-  //   let sum = 0;
-  //   let shouldDouble = false;
-  
-  //   for (let i = cardNumber.length - 1; i >= 0; i--) {
-  //     let digit = parseInt(cardNumber.charAt(i));
-  
-  //     if (shouldDouble) {
-  //       digit *= 2;
-  //       if (digit > 9) digit -= 9;
-  //     }
-  
-  //     sum += digit;
-  //     shouldDouble = !shouldDouble;
-  //   }
-
-  //   if (sum % 10 === 0) {
-  //     return true
-  //   } else {
-  //     console.log("Le numéro de carte n'est pas valide !");
-  //     return false
-  //   }
-  // };
-
-  // const validateForm = (formData) => {
-  //   const errors = {};
-  //   const cardNumber = formData.get("card");
-  //   const crypto = formData.get("crypto");
-  //   const expDate = formData.get("exp_date");
-
-  //   if (!isValidCardNumber(cardNumber)) {
-  //     errors.card = "Numéro de carte invalide.";
-  //   }
-
-  //   if (!crypto || crypto.length < 3 || crypto.length > 4) {
-  //     errors.crypto = "Cryptogramme invalide.";
-  //   }
-
-  //   if (!expDate) {
-  //     errors.exp_date = "Date d'expiration invalide.";
-  //   }
-
-  //   return errors;
-  // };
-
-  // async function handlePayment(event) {
-  //   event.preventDefault();
-
-  //   const formData = new FormData(event.target);
-  //   const cardValue = formData.get("card");
-  //   const formObject = Object.fromEntries(formData.entries());
-
-  //   if (isValidCardNumber(cardValue) === false) {
-  //     return
-  //   }
-
-  //   if (isValidCardNumber(cardValue) == true) {
-  //     console.log("Le numéro de carte est valide !");
-  //   }
-
-  //   const validationErrors = validateForm(formData);
-  //   setErrors(validationErrors);
-
-  //   if (Object.keys(validationErrors).length > 0) {
-  //     console.log("Validation errors:", validationErrors);
-  //     return;
-  //   }
-
-  //   const token = localStorage.getItem("token");
-
-  //   fetch(`http://127.0.0.1:8000/api/paidments`, {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/ld+json",
-  //       Authorization: `Bearer ${token}`,
-  //     },  
-  //     body: JSON.stringify({
-  //       ...formObject,
-  //       exp_date: new Date(formObject.exp_date).toISOString().split('T')[0] // Formatage de la date
-  //     }),
-  //   })
-  //     .then((response) => {
-  //       if (!response.ok) {
-  //         throw new Error("Erreur de réseau : " + response.status);
-  //       }
-  //       const contentType = response.headers.get('content-type');
-  //       if (contentType && contentType.includes('application/json')) {
-  //         response.json();
-  //       }
-  //     })
-  //     .then((data) => {
-  //       console.log(data);
-  //       alert("Paiement effectué avec succès !");
-  //       appContext.setSucessMessage("Paiement effectué avec succès !");
-  //       router.push("/profile");
-  //     })
-  //     .catch((error) => {
-  //       console.error("Erreur lors de la requête :", error);
-  //       alert("Une erreur s'est produite lors du paiement.");
-  //       appContext.setErrorMessage("Une erreur s'est produite lors du paiement.");
-  //     });
-  // };
-  
+  // PAIDMENT CARD
   const isValidCardNumber = (cardNumber) => {
     let sum = 0;
     let shouldDouble = false;
@@ -217,6 +116,7 @@ export default function Payment(props) {
     if (sum % 10 === 0) {
       return true;
     } else {
+      appContext.setErrorMessage("Le numéro de carte n'est pas valide !");
       console.log("Le numéro de carte n'est pas valide !");
       return false;
     }
@@ -252,7 +152,7 @@ export default function Payment(props) {
     }
 
     const validationErrors = validateForm(formData);
-    setErrors(validationErrors);
+    appContext.setErrorMessage(validationErrors);
     if (Object.keys(validationErrors).length > 0) {
       console.log("Validation errors:", validationErrors);
       return;
@@ -295,8 +195,7 @@ export default function Payment(props) {
         router.push("/profile");
       })
       .catch((error) => {
-        console.error("Erreur lors de la requête :", error);
-        // alert("Une erreur s'est produite lors du paiement.");
+        console.error("Erreur lors de la requête : ", error);
         appContext.setErrorMessage("Une erreur s'est produite lors du paiement.");
       });
   };
@@ -305,7 +204,8 @@ export default function Payment(props) {
     loading ? (
     <main>
       <h1 className={`${audiowide.className}`}>Régler l'amende</h1>
-
+      {appContext.errorMessage != null && (
+        <Message severity="error" text={"Une erreur est survenue : " + appContext.errorMessage} />)}
       <h2 className={`${audiowide.className} px-10 py-5`}>
         <p className="text-base leading-10">Infraction : <strong className="font-black">Refus d'obtempérer face à un membre des Forces de Défense Anti-Kaiju.</strong><br/>
         Somme à régler : <strong className="font-black">450€</strong></p></h2>

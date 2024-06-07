@@ -9,3 +9,7 @@ find_by_id_taxe:
     path: '/api/fines/IdTaxes/{idTaxes}'
     methods: ['GET']
     controller: 'App\Controller\FineController::getTaxeByNumber'
+post_fine:
+    path: '/api/paidments/check'
+    methods: ['POST']
+    controller: 'App\Controller\PaidmentController::paidmentCheck'

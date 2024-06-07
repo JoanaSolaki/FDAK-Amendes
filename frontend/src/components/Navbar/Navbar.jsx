@@ -8,7 +8,6 @@ import { useRouter } from 'next/navigation';
 import { jwtDecode } from 'jwt-decode';
 
 export default function Navbar() {
-  const router = useRouter();
   const appContext = useContext(AppContext);
 
   useEffect(() => {
@@ -20,7 +19,7 @@ export default function Navbar() {
     localStorage.removeItem("token");
     appContext.setToken(null);
     appContext.setUserData(null);
-    router.push("/connexion");
+    window.location.href = "/connexion";
   }
 
   return (

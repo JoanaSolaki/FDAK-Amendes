@@ -67,6 +67,24 @@ h2 {
   width: 360px;
 }
 
+.p-inline-message {
+  display: flex;
+  flex-flow: row;
+  width: 100%;
+}
+
+.p-inline-message-error {
+  color: indianred;
+}
+
+.p-inline-message-sucess {
+  color: var(--primaryColor);
+}
+
+.p-inline-message-text {
+  margin: 0 10px;
+}
+
 /* CALENDAR */
 
 .paidmentForm {

@@ -19,6 +19,8 @@ export default function Profile() {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+    appContext.setErrorMessage(null)
+    appContext.setSucessMessage(null)
     if (token) {
       const decodedToken = jwtDecode(token);
       const idUser = decodedToken.user.id;

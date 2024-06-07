@@ -13,6 +13,8 @@ export default function Connexion() {
     const router = useRouter();
     const appContext = useContext(AppContext)
 
+    appContext.setErrorMessage(null)
+
     isTokenValid("/connexion");
 
     async function onSubmit(event) {

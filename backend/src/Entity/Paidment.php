@@ -14,7 +14,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ApiResource(
     operations: [
         new Get(),
+        new Post(),
         new Post(
+            uriTemplate: '/paidments/check',
+            routeName: 'post_fine',
         ),
     ]
 )]
@@ -43,6 +46,8 @@ class Paidment
     private string $crypto = "";
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\NotNull]
+    #[Assert\GreaterThan("today", message: "Carte périmée.")]
     private ?\DateTimeInterface $exp_date = null;
 
     #[ORM\OneToOne(inversedBy: 'paidment', cascade: ['persist', 'remove'])]
