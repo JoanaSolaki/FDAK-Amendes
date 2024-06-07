@@ -135,6 +135,8 @@ export default function Profile() {
       </h1>
       {appContext.errorMessage != null && (
         <Message severity="error" text={"Une erreur est survenue : " + appContext.errorMessage} />)}
+      {appContext.sucessMessage != null && (
+        <Message severity="sucess" text={appContext.sucessMessage} />)}
       <h2 className={`${audiowide.className}`}>Informations personnelles</h2>
       <section className="profile">
         <form method="post" className="profileForm">

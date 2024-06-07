@@ -14,6 +14,8 @@ export default function Payment(props) {
   const router = useRouter();
   const [loading, setloading] = useState(false);
   const appContext = useContext(AppContext);
+  const [date, setDate] = useState(null);
+  const [errors, setErrors] = useState({});
 
   const [fineDetails, setFineDetails] = useState(null);
 
@@ -85,8 +87,6 @@ export default function Payment(props) {
   let nextMonth = month === 11 ? 0 : month + 1;
   let nextYear = nextMonth === 0 ? year + 1 : year;
 
-  const [date, setDate] = useState(null);
-
   let minDate = new Date();
 
   minDate.setMonth(prevMonth);
@@ -98,50 +98,206 @@ export default function Payment(props) {
   maxDate.setFullYear(nextYear);
 
 // CARD_NUMBER
+  // const isValidCardNumber = (cardNumber) => {
+  //   let sum = 0;
+  //   let shouldDouble = false;
+  
+  //   for (let i = cardNumber.length - 1; i >= 0; i--) {
+  //     let digit = parseInt(cardNumber.charAt(i));
+  
+  //     if (shouldDouble) {
+  //       digit *= 2;
+  //       if (digit > 9) digit -= 9;
+  //     }
+  
+  //     sum += digit;
+  //     shouldDouble = !shouldDouble;
+  //   }
+
+  //   if (sum % 10 === 0) {
+  //     return true
+  //   } else {
+  //     console.log("Le numéro de carte n'est pas valide !");
+  //     return false
+  //   }
+  // };
+
+  // const validateForm = (formData) => {
+  //   const errors = {};
+  //   const cardNumber = formData.get("card");
+  //   const crypto = formData.get("crypto");
+  //   const expDate = formData.get("exp_date");
+
+  //   if (!isValidCardNumber(cardNumber)) {
+  //     errors.card = "Numéro de carte invalide.";
+  //   }
+
+  //   if (!crypto || crypto.length < 3 || crypto.length > 4) {
+  //     errors.crypto = "Cryptogramme invalide.";
+  //   }
+
+  //   if (!expDate) {
+  //     errors.exp_date = "Date d'expiration invalide.";
+  //   }
+
+  //   return errors;
+  // };
+
+  // async function handlePayment(event) {
+  //   event.preventDefault();
+
+  //   const formData = new FormData(event.target);
+  //   const cardValue = formData.get("card");
+  //   const formObject = Object.fromEntries(formData.entries());
+
+  //   if (isValidCardNumber(cardValue) === false) {
+  //     return
+  //   }
+
+  //   if (isValidCardNumber(cardValue) == true) {
+  //     console.log("Le numéro de carte est valide !");
+  //   }
+
+  //   const validationErrors = validateForm(formData);
+  //   setErrors(validationErrors);
+
+  //   if (Object.keys(validationErrors).length > 0) {
+  //     console.log("Validation errors:", validationErrors);
+  //     return;
+  //   }
+
+  //   const token = localStorage.getItem("token");
+
+  //   fetch(`http://127.0.0.1:8000/api/paidments`, {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/ld+json",
+  //       Authorization: `Bearer ${token}`,
+  //     },  
+  //     body: JSON.stringify({
+  //       ...formObject,
+  //       exp_date: new Date(formObject.exp_date).toISOString().split('T')[0] // Formatage de la date
+  //     }),
+  //   })
+  //     .then((response) => {
+  //       if (!response.ok) {
+  //         throw new Error("Erreur de réseau : " + response.status);
+  //       }
+  //       const contentType = response.headers.get('content-type');
+  //       if (contentType && contentType.includes('application/json')) {
+  //         response.json();
+  //       }
+  //     })
+  //     .then((data) => {
+  //       console.log(data);
+  //       alert("Paiement effectué avec succès !");
+  //       appContext.setSucessMessage("Paiement effectué avec succès !");
+  //       router.push("/profile");
+  //     })
+  //     .catch((error) => {
+  //       console.error("Erreur lors de la requête :", error);
+  //       alert("Une erreur s'est produite lors du paiement.");
+  //       appContext.setErrorMessage("Une erreur s'est produite lors du paiement.");
+  //     });
+  // };
+  
   const isValidCardNumber = (cardNumber) => {
     let sum = 0;
     let shouldDouble = false;
-  
+
     for (let i = cardNumber.length - 1; i >= 0; i--) {
       let digit = parseInt(cardNumber.charAt(i));
-  
       if (shouldDouble) {
         digit *= 2;
         if (digit > 9) digit -= 9;
       }
-  
       sum += digit;
       shouldDouble = !shouldDouble;
     }
-
-    return sum % 10 === 0;
+    if (sum % 10 === 0) {
+      return true;
+    } else {
+      console.log("Le numéro de carte n'est pas valide !");
+      return false;
+    }
   };
 
-  const handlePayment = () => {
-    const token = localStorage.getItem("token");
+  const validateForm = (formData) => {
+    const errors = {};
+    const cardNumber = formData.get("card");
+    const crypto = formData.get("crypto");
+    const expDate = formData.get("exp_date");
 
-    isValidCardNumber();
-    
-    fetch(`http://127.0.0.1:8000/api/paidment`, {
+    if (!isValidCardNumber(cardNumber)) {
+      errors.card = "Numéro de carte invalide.";
+    }
+    if (!crypto || crypto.length < 3 || crypto.length > 4) {
+      errors.crypto = "Cryptogramme invalide.";
+    }
+    if (!expDate || expDate > new Date()) {
+      errors.exp_date = "Date d'expiration invalide.";
+    }
+    return errors;
+  };
+
+  async function handlePayment(event) {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    const cardValue = formData.get("card");
+    const formObject = Object.fromEntries(formData.entries());
+
+    if (!isValidCardNumber(cardValue)) {
+      return;
+    }
+
+    const validationErrors = validateForm(formData);
+    setErrors(validationErrors);
+    if (Object.keys(validationErrors).length > 0) {
+      console.log("Validation errors:", validationErrors);
+      return;
+    }
+
+    const token = localStorage.getItem("token");
+    const decodedToken = jwtDecode(token);
+    const userId = decodedToken.user.id;
+    const fineId = props.params.paidmentId.replace("paidment%3A", "");
+
+    const requestData = {
+      ...formObject,
+      exp_date: new Date(formObject.exp_date).toISOString().split('T')[0],
+      date: new Date().toISOString().split('T')[0],
+      user: `/api/users/${userId}`,
+      fine: `/api/fines/${fineId}`,
+    };
+    console.log("Sending data:", requestData);
+
+    fetch(`http://127.0.0.1:8000/api/paidments`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/ld+json",
         Authorization: `Bearer ${token}`,
       },
+      body: JSON.stringify(requestData),
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Erreur de réseau : " + response.status);
+          return response.json().then((errorData) => {
+            throw new Error(`Erreur de réseau : ${response.status} - ${JSON.stringify(errorData)}`);
+          });
         }
         return response.json();
       })
       .then((data) => {
-        alert("Paiement effectué avec succès !");
+        console.log(data);
+        // alert("Paiement effectué avec succès !");
+        appContext.setSucessMessage("Paiement effectué avec succès !");
         router.push("/profile");
       })
       .catch((error) => {
         console.error("Erreur lors de la requête :", error);
-        alert("Une erreur s'est produite lors du paiement.");
+        // alert("Une erreur s'est produite lors du paiement.");
+        appContext.setErrorMessage("Une erreur s'est produite lors du paiement.");
       });
   };
 
@@ -164,11 +320,8 @@ export default function Payment(props) {
           </div>
           <div>
             <Input label="N° de carte bancaire" name="card" minLength="12" maxLength="16"></Input>
-            <Input label="Cryptogramme" name="crypto" type="number" minLength="3" maxLength="4"></Input>
-            <div>
-              <label htmlFor="exp_date">Date d’expiration*</label>
-              <Calendar name="exp_date" type="date" value={date} onChange={(e) => setDate(e.value)} minDate={minDate} maxDate={maxDate} readOnlyInput />
-            </div>
+            <Input label="Cryptogramme" name="crypto" type="text" minLength="3" maxLength="4"></Input>
+            <Input label="Date d’expiration" name="exp_date" type="date"></Input>
           </div>
           <Button text={"Valider et payer"} type="submit"></Button>
         </form>

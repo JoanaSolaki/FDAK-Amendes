@@ -32,9 +32,6 @@ class Paidment
     private ?\DateTimeInterface $date = null;
     
     #[Assert\Length(min: 12)]
-    #[Assert\Regex(
-        '/(^4[0-9]{12}(?:[0-9]{3})?$)|(^(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}$)|(3[47][0-9]{13})|(^3(?:0[0-5]|[68][0-9])[0-9]{11}$)|(^6(?:011|5[0-9]{2})[0-9]{12}$)|(^(?:2131|1800|35\d{3})\d{11}$)/', 
-        message: "The characters entered are not correct.")]
     #[ORM\Column(length: 20)]
     private string $card = "";
 
@@ -43,7 +40,7 @@ class Paidment
         "/^\d{3,4}$/", 
         message: "The characters entered are not correct.")]
     #[ORM\Column(length: 4)]
-    private int $crypto = 0;
+    private string $crypto = "";
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $exp_date = null;
