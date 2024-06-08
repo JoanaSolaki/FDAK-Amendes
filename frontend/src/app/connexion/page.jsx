@@ -56,7 +56,7 @@ export default function Connexion() {
             <Message severity="sucess" text={appContext.sucessMessage} />
           )}
           <h1 className={`${audiowide.className} text-center`}>Connexion</h1>
-          <FormConnexion onSubmit={onSubmit}></FormConnexion>
+          <FormConnexion onSubmit={onSubmit} className="connexion"></FormConnexion>
         </main>
     );
 }

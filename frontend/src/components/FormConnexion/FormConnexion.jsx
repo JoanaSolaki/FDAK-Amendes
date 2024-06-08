@@ -13,7 +13,7 @@ export default function FormConnexion({ onSubmit }) {
                 <label htmlFor='password'>Mot de passe*</label>
                 <InputText name="password" type="password" minLength="6" maxLength="255" required />
             </div>
-            <Button text={"Se connecter"} type="submit"></Button>
+            <Button text={"Se connecter"} type="submit" id="connexion_button"></Button>
         </form>
     );
 }
