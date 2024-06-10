@@ -20,8 +20,6 @@ class PaidmentController extends AbstractController
     }
 
     private function isValidCardNumber($cardNumber): bool {
-        var_dump("isValidCardNumber");
-        die;
         $sum = 0;
         $shouldDouble = false;
 

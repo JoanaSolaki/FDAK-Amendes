@@ -55,22 +55,23 @@ class LoginControllerTest extends WebTestCase
         }
     }
 
-    // public function testMissingCredentials(): void
-    // {
-    //     $response = $this->client->request('POST', 'http://127.0.0.1:8000/api/login_check', [
-    //         'json' => [
-    //             'username' => '',
-    //             'password' => '',
-    //         ],
-    //         'headers' => [
-    //             'Content-Type' => 'application/ld+json',
-    //         ],
-    //     ]);
+    public function testMissingCredentials(): void
+    {
+        $response = $this->client->request('GET', '/connexion');
+        $this->assertEquals(200, $response->getStatusCode(), "La page de connexion ne s'est pas chargée correctement.");
 
-    //     $this->assertEquals(400, $response->getStatusCode(), "La réponse de connexion pour des informations manquantes n'est pas correcte.");
+        $formParams = [
+            'json' => [ 
+                'username' => '',
+                'password' => '',
+            ],
+        ];
 
-    //     $data = json_decode((string) $response->getBody(), true);
-    //     $this->assertArrayHasKey('message', $data, "Le message d'erreur n'est pas présent dans la réponse.");
-    //     $this->assertEquals('Missing credentials.', $data['message'], "Le message d'erreur n'est pas correct.");
-    // }
+        try {
+            $response = $this->client->request('POST', 'http://127.0.0.1:8000/api/login_check', $formParams);
+            $this->fail("La réponse de connexion pour des informations incorrectes n'est pas correcte.");
+        } catch (ClientException $e) {
+            $this->assertEquals(400, $e->getResponse()->getStatusCode(), "La réponse de connexion pour des informations manquantes n'est pas correcte.");
+        }
+    }
 }
