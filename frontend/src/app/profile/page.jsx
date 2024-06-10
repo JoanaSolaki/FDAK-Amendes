@@ -161,7 +161,7 @@ export default function Profile() {
 
       <h2 className={`${audiowide.className}`}>Règlements enregistrés</h2>
       <section className="profile">
-        <FinePaids/>
+        <FinePaids paidments={appContext.userData.paidments}/>
       </section>
     </main>
     ) : (<p>Loading</p>)

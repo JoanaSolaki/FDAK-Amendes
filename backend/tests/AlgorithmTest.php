@@ -2,8 +2,6 @@
 
 namespace App\Tests;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class AlgorithmTest extends WebTestCase
@@ -61,7 +59,6 @@ class AlgorithmTest extends WebTestCase
     public function testAlgoIdTaxesFailed() :void {
         list($isValid, $message) = $this->validateIdTaxes('ZA2024_22_78');
         $this->assertFalse($isValid, $message);
-
     }
 
     public function testAlgoLuhnSuccess() :void {

@@ -5,7 +5,6 @@ namespace App\Tests;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\VarDumper\VarDumper;
 
 class LoginControllerTest extends WebTestCase
 {
